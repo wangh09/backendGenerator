@@ -1,6 +1,7 @@
 package generator;
 
-import generator.engine.impl.environment.SpringCloudEngine;
+import generator.engine.impl.controller.ControllerBaseEngine;
+import generator.engine.impl.environment.SpringCloudBaseEngine;
 import generator.parameter.UserParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class Generator {
     static Logger logger = LoggerFactory.getLogger(Generator.class);
     public static void execute() throws Exception{
-        new SpringCloudEngine().execute();
+        new SpringCloudBaseEngine().execute();
         printlnResult();
     }
     private static void printlnResult(){
@@ -26,11 +27,11 @@ public class Generator {
     public static void main(String[] args) throws Exception {
         String author = "wangh09";
         String projectName = "";
-        String dbHost = "127.0.0.1";
+        String dbHost = "120.92.36.30";
         String dbPort = "3306";
-        String dbUser = "root";
-        String dbPass = "";
-        String dbName = "gamesapi";
+        String dbUser = "admin";
+        String dbPass = "Cocare7456321!";
+        String dbName = "wh_test";
         String packageName = "individual.wangh09.test";
 
         UserParameters.initParam(author,dbHost,dbUser,dbPass,

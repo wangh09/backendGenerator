@@ -13,6 +13,10 @@ public class UserParameters {
     private static String packageName;
     private static String projectName;
 
+    public static String getMysqlHost() {
+        return String.format("jdbc:mysql://%s:%s/%s",dbHost,dbPort,dbName);
+
+    }
     public static String getAuthor() {
         return author;
     }
