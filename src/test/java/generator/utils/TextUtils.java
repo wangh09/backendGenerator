@@ -5,7 +5,7 @@ package generator.utils;
  */
 public class TextUtils {
     static public String upperToLowerBegin(String camel) {
-        return camel.substring(0, 1).toUpperCase() + camel.substring(1);
+        return camel.substring(0, 1).toLowerCase() + camel.substring(1);
     }
     public static String packageConvertPath(String packageName) {
         return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);

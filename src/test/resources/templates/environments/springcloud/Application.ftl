@@ -1,4 +1,6 @@
 package ${package};
+import ${package}.filter.PostFilter;
+import ${package}.filter.PreFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;

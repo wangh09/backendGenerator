@@ -31,8 +31,10 @@ public class ${modelNameUpperCamel}Controller {
 
     @PostMapping("/add")
     public Result add(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
+        ${modelNameLowerCamel}.setId(TextUtils.getIdByUUID());
         ${modelNameLowerCamel}.setGlobalStateType(StateUtils.STATE_NORMAL);
         ${modelNameLowerCamel}.setCreateTime(TextUtils.getNowTime());
+
         ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
         return ResultGenerator.genSuccessResult(${modelNameLowerCamel});
     }
@@ -46,9 +48,8 @@ public class ${modelNameUpperCamel}Controller {
         ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
         return ResultGenerator.genSuccessResult(${modelNameLowerCamel});
     }
-
     @GetMapping("/delete")
-    public Result delete(@RequestParam(required = true) Integer id) {
+    public Result delete(@RequestParam(required = true) String id) {
         ${modelNameLowerCamel}Service.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
@@ -60,7 +61,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @GetMapping("/get")
-    public Result detail(@RequestParam(required = true) Integer id) {
+    public Result detail(@RequestParam(required = true) String id) {
         ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.get(id);
         return ResultGenerator.genSuccessResult(${modelNameLowerCamel});
     }

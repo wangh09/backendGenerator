@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="individual.wangh09.test.mapper.AccountRRoleMapper">
+  <resultMap id="BaseResultMap" type="individual.wangh09.test.model.AccountRRole">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="account_id" jdbcType="VARCHAR" property="accountId" />
+    <result column="dic_role_type" jdbcType="INTEGER" property="dicRoleType" />
+    <result column="global_state_type" jdbcType="INTEGER" property="globalStateType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+</mapper>

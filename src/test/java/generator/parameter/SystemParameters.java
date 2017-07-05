@@ -16,5 +16,7 @@ public class SystemParameters {
     public static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
     public static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 
+    public static final String INNER_PATH = "remove-me";
+
     public static final String MAPPER_INTERFACE_REFERENCE = UserParameters.getPackageName() + "."+UTILS_PACKAGE_NAME+".Mapper";
 }

@@ -1,7 +1,7 @@
 package ${packageName};
 
 /**
- * 响应结果生成工具
+ * Created by ${author} on ${date}.
  */
 public class ResultGenerator {
     private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";

@@ -3,11 +3,14 @@ import com.ibatis.common.jdbc.ScriptRunner;
 import com.ibatis.common.resources.Resources;
 import freemarker.template.TemplateExceptionHandler;
 import generator.engine.Engine;
+import generator.engine.impl.ORM.MybatisEngine;
 import generator.engine.impl.controller.ControllerBaseEngine;
+import generator.engine.impl.filter.FilterBaseEngine;
 import generator.parameter.SystemParameters;
 import generator.parameter.UserParameters;
 import generator.utils.TextUtils;
 import org.apache.catalina.User;
+import org.apache.catalina.filters.FilterBase;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.*;
 import org.mybatis.generator.internal.DefaultShellCallback;
@@ -63,72 +66,31 @@ public class SpringCloudBaseEngine implements Engine {
     }
     private void generateAuth() {
         try {
-            String tableName = "resource_d_api";
-            //***************************************************************建立数据库
+            //***************************************************************API表相关
             Connection conn = DriverManager.getConnection(UserParameters.getMysqlHost(), UserParameters.getDbUser(), UserParameters.getDbPass());
             ScriptRunner runner = new ScriptRunner(conn, false, false);
             runner.runScript(Resources.getResourceAsReader("templates/environments/springcloud/api.sql"));
-            //***************************************************************生成mapper代码
-            Context context = new Context(ModelType.FLAT);
-            context.setId("wangh09-api");
-            context.setTargetRuntime("MyBatis3Simple");
-            context.addProperty(PropertyRegistry.CONTEXT_BEGINNING_DELIMITER, "`");
-            context.addProperty(PropertyRegistry.CONTEXT_ENDING_DELIMITER, "`");
+            String tableName = "resource_d_api";
+            MybatisEngine.generateWithIDType(tableName,true);
+            ControllerBaseEngine.generateForModel(SystemParameters.INNER_PATH,"resource","api",TextUtils.tableNameConvertUpperCamel(tableName),false);
+            //***************************************************************Account表相关
+            runner.runScript(Resources.getResourceAsReader("templates/environments/springcloud/account.sql"));
+            tableName = "account_d_account";
+            MybatisEngine.generateWithIDType(tableName,false);
+            ControllerBaseEngine.generateForAccount(SystemParameters.INNER_PATH,"account","account",TextUtils.tableNameConvertUpperCamel(tableName),
+                    TextUtils.tableNameConvertUpperCamel("account_r_role"));
+            //***************************************************************Dictionary表相关
+            tableName = "account_d_dictionary";
+            runner.runScript(Resources.getResourceAsReader("templates/environments/springcloud/dictionary.sql"));
+            MybatisEngine.generateWithIDType(tableName,false);
+            ControllerBaseEngine.generateForModel(SystemParameters.INNER_PATH,"account","dictionary",TextUtils.tableNameConvertUpperCamel(tableName),false);
 
-            JDBCConnectionConfiguration jdbcConnectionConfiguration = new JDBCConnectionConfiguration();
-            jdbcConnectionConfiguration.setConnectionURL(UserParameters.getMysqlHost());
-            jdbcConnectionConfiguration.setUserId(UserParameters.getDbUser());
-            jdbcConnectionConfiguration.setPassword(UserParameters.getDbPass());
-            jdbcConnectionConfiguration.setDriverClass(SystemParameters.JDBC_DIVER_CLASS_NAME);
-            context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
+            //***************************************************************role表相关
+            tableName = "account_r_role";
+            runner.runScript(Resources.getResourceAsReader("templates/environments/springcloud/role.sql"));
+            MybatisEngine.generateWithIDType(tableName,false);
+            ControllerBaseEngine.generateForModel(SystemParameters.INNER_PATH,"account","role",TextUtils.tableNameConvertUpperCamel(tableName),true);
 
-            PluginConfiguration pluginConfiguration = new PluginConfiguration();
-            pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
-            pluginConfiguration.addProperty("mappers", SystemParameters.MAPPER_INTERFACE_REFERENCE);
-            context.addPluginConfiguration(pluginConfiguration);
-
-            JavaModelGeneratorConfiguration javaModelGeneratorConfiguration = new JavaModelGeneratorConfiguration();
-            javaModelGeneratorConfiguration.setTargetProject(SystemParameters.PROJECT_PATH + SystemParameters.JAVA_PATH);
-            javaModelGeneratorConfiguration.setTargetPackage(UserParameters.getPackageName() +"." +SystemParameters.MODEL_PACKAGE_NAME);
-            context.setJavaModelGeneratorConfiguration(javaModelGeneratorConfiguration);
-
-            SqlMapGeneratorConfiguration sqlMapGeneratorConfiguration = new SqlMapGeneratorConfiguration();
-            sqlMapGeneratorConfiguration.setTargetProject(SystemParameters.PROJECT_PATH + SystemParameters.RESOURCE_PATH);
-            sqlMapGeneratorConfiguration.setTargetPackage("mapper");
-            context.setSqlMapGeneratorConfiguration(sqlMapGeneratorConfiguration);
-
-            JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = new JavaClientGeneratorConfiguration();
-            javaClientGeneratorConfiguration.setTargetProject(SystemParameters.PROJECT_PATH + SystemParameters.JAVA_PATH);
-            javaClientGeneratorConfiguration.setTargetPackage(UserParameters.getPackageName() +"." +SystemParameters.MAPPER_PACKAGE_NAME);
-            javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
-            context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
-
-            TableConfiguration tableConfiguration = new TableConfiguration(context);
-            tableConfiguration.setTableName(tableName);
-            tableConfiguration.setGeneratedKey(new GeneratedKey("id", "Mysql", true, null));
-            context.addTableConfiguration(tableConfiguration);
-
-            List<String> warnings;
-            MyBatisGenerator generator;
-            try {
-                Configuration config = new Configuration();
-                config.addContext(context);
-                config.validate();
-
-                boolean overwrite = true;
-                DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-                warnings = new ArrayList<String>();
-                generator = new MyBatisGenerator(config, callback, warnings);
-                generator.generate(null);
-            } catch (Exception e) {
-                throw new RuntimeException("生成Model和Mapper失败", e);
-            }
-
-            if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
-                throw new RuntimeException("生成Model和Mapper失败：" + warnings);
-            }
-
-            ControllerBaseEngine.generateForModel("resource","api",TextUtils.tableNameConvertUpperCamel(tableName));
             System.out.println("生成成功");
         } catch(Exception e) {
             e.printStackTrace();
@@ -158,9 +120,12 @@ public class SpringCloudBaseEngine implements Engine {
             cfg.getTemplate("Application.ftl").process(data,
                     new FileWriter(file));
             data.clear();
+            data.put("author", UserParameters.getAuthor());
+            data.put("date",new Date().toString());
             data.put("packageName", UserParameters.getPackageName()+"."+SystemParameters.UTILS_PACKAGE_NAME);
             String[] fileNames = {"Mapper.java","Service.java","AbstractService.java","ServiceException.java","Result.java",
-                                "ResultCode.java","ResultGenerator.java"};
+                                "ResultCode.java","ResultGenerator.java","TextUtils.java","StateUtils.java",
+                                "JWTUtils.java","ServerUtils.java"};
             for (String filename:fileNames) {
                 file = new File(SystemParameters.PROJECT_PATH + SystemParameters.JAVA_PATH + TextUtils.packageConvertPath(UserParameters.getPackageName()) + "/"+SystemParameters.UTILS_PACKAGE_NAME +"/"+filename);
                 if (!file.getParentFile().exists()) {
@@ -169,6 +134,25 @@ public class SpringCloudBaseEngine implements Engine {
                 cfg.getTemplate("/"+SystemParameters.UTILS_PACKAGE_NAME+"/"+filename.replace(".java",".ftl")).process(data,
                         new FileWriter(file));
             }
+            ControllerBaseEngine.generateInfoController();
+
+            data.clear();
+            file = new File(SystemParameters.PROJECT_PATH + SystemParameters.RESOURCE_PATH + "/application.properties");
+            data.put("dbHost", UserParameters.getDbHost());
+            data.put("dbUser", UserParameters.getDbUser());
+            data.put("dbPort", UserParameters.getDbPort());
+            data.put("dbName", UserParameters.getDbName());
+            data.put("dbPass", UserParameters.getDbPass());
+
+            String urlMappings = "";
+            for(String serviceName: UserParameters.microServices) {
+                urlMappings += "zuul.routes."+serviceName+".path=/"+serviceName+"/**\n"+
+                        "zuul.routes."+serviceName+".url=http://localhost:2223/"+SystemParameters.INNER_PATH+"/"+serviceName+"\n";
+            }
+
+            data.put("urlmappings",urlMappings);
+            cfg.getTemplate("applicationproperties.ftl").process(data,
+                    new FileWriter(file));
             System.out.println("基础结构生成成功！");
 
 
@@ -181,5 +165,6 @@ public class SpringCloudBaseEngine implements Engine {
         generateBaseFiles();
         generateAuth();
         generateConfigurations();
+        new FilterBaseEngine().execute();
     }
 }

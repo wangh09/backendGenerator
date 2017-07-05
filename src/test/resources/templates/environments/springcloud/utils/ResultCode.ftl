@@ -1,7 +1,7 @@
 package ${packageName};
 
 /**
- * 响应码枚举，参考HTTP状态码的语义
+ * Created by ${author} on ${date}.
  */
 public enum ResultCode {
     SUCCESS(200),//成功
@@ -10,9 +10,9 @@ public enum ResultCode {
     NOT_FOUND(404),//接口不存在
     INTERNAL_SERVER_ERROR(500);//服务器内部错误
 
-    public int code;
+    public int status;
 
-    ResultCode(int code) {
-        this.code = code;
-    }
+     ResultCode(int code) {
+         this.status = code;
+     }
 }

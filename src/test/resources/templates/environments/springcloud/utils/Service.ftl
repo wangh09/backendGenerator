@@ -6,7 +6,7 @@ import tk.mybatis.mapper.entity.Condition;
 import java.util.List;
 
 /**
- * Service 层 基础接口，其他Service 接口 请继承该接口
+ * Created by ${author} on ${date}.
  */
 public interface Service<T> {
     void save(T model);//持久化

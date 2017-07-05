@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="individual.wangh09.test.mapper.AccountDAccountMapper">
+  <resultMap id="BaseResultMap" type="individual.wangh09.test.model.AccountDAccount">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="passwd" jdbcType="VARCHAR" property="passwd" />
+    <result column="dic_default_role_type" jdbcType="INTEGER" property="dicDefaultRoleType" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="dic_sex_type" jdbcType="INTEGER" property="dicSexType" />
+    <result column="dic_id_type" jdbcType="INTEGER" property="dicIdType" />
+    <result column="id_number" jdbcType="INTEGER" property="idNumber" />
+    <result column="global_state_type" jdbcType="INTEGER" property="globalStateType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+  </resultMap>
+</mapper>

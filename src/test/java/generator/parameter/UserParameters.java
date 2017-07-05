@@ -1,5 +1,7 @@
 package generator.parameter;
 
+import java.util.ArrayList;
+
 /**
  * Created by wangh09 on 2017/6/30.
  */
@@ -11,8 +13,10 @@ public class UserParameters {
     private static String dbName;
     private static String dbPort;
     private static String packageName;
-    private static String projectName;
-
+    public static ArrayList<String> microServices = new ArrayList<>();
+    public static void addMicroService(String serviceName) {
+        microServices.add(serviceName);
+    }
     public static String getMysqlHost() {
         return String.format("jdbc:mysql://%s:%s/%s",dbHost,dbPort,dbName);
 
@@ -73,16 +77,8 @@ public class UserParameters {
         UserParameters.packageName = packageName;
     }
 
-    public static String getProjectName() {
-        return projectName;
-    }
-
-    public static void setProjectName(String projectName) {
-        UserParameters.projectName = projectName;
-    }
-
     public static void initParam(String author, String dbHost, String dbUser, String dbPass, String dbName,
-                                 String dbPort, String packageName,String projectName) {
+                                 String dbPort, String packageName) {
         UserParameters.author = author;
         UserParameters.dbHost = dbHost;
         UserParameters.dbUser = dbUser;
@@ -90,7 +86,6 @@ public class UserParameters {
         UserParameters.dbName = dbName;
         UserParameters.dbPort = dbPort;
         UserParameters.packageName = packageName;
-        UserParameters.projectName = projectName;
     }
 
 }

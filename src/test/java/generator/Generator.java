@@ -19,14 +19,13 @@ public class Generator {
      //   DirectoryUtils.readFile(UserParameters.getDestPath());
         logger.info("\n\n");
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        logger.info("@      Genarate Successfully !       @");
+        logger.info("@      Genarated Successfully !      @");
         logger.info("@            Thank you!              @");
         logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     }
 
     public static void main(String[] args) throws Exception {
         String author = "wangh09";
-        String projectName = "";
         String dbHost = "120.92.36.30";
         String dbPort = "3306";
         String dbUser = "admin";
@@ -35,7 +34,9 @@ public class Generator {
         String packageName = "individual.wangh09.test";
 
         UserParameters.initParam(author,dbHost,dbUser,dbPass,
-                dbName,dbPort,packageName,projectName);
+                dbName,dbPort,packageName);
+        UserParameters.addMicroService("account-service");
+        UserParameters.addMicroService("resource-service");
         Generator.execute();
     }
 }
