@@ -13,6 +13,7 @@ public class SystemParameters {
     public static final String FILTER_PACKAGE_NAME = "filter";
     public static final String UTILS_PACKAGE_NAME = "utils";
     public static final String CONFIG_PACKAGE_NAME = "config";
+    public static final String MESSAGE_QUEUE_PACKAGE_NAME = "mq";
     public static final String PROJECT_PATH = System.getProperty("user.dir");//项目在硬盘上的基础路径
     public static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
 

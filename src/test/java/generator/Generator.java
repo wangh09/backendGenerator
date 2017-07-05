@@ -2,6 +2,7 @@ package generator;
 
 import generator.engine.impl.controller.ControllerBaseEngine;
 import generator.engine.impl.environment.SpringCloudBaseEngine;
+import generator.engine.impl.mq.KafkaEngine;
 import generator.parameter.UserParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ public class Generator {
     static Logger logger = LoggerFactory.getLogger(Generator.class);
     public static void execute() throws Exception{
         new SpringCloudBaseEngine().execute();
+        new KafkaEngine().execute();
         printlnResult();
     }
     private static void printlnResult(){
