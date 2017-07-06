@@ -18,7 +18,8 @@ public class Generator {
     static Logger logger = LoggerFactory.getLogger(Generator.class);
     public static void execute() throws Exception{
         new SpringCloudBaseEngine().execute();
-
+        new MybatisEngine().execute();
+        new ControllerBaseEngine().execute();
 
       //  new KafkaEngine().execute();
         printlnResult();
