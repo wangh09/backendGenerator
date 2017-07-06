@@ -29,7 +29,7 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public void save(List<T> models) {
-        mapper.insertList(models);
+        mapper.insertAll(models);
     }
 
     public void deleteById(Integer id) {

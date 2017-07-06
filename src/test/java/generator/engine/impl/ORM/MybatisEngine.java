@@ -29,6 +29,8 @@ public class MybatisEngine implements Engine{
         context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
 
         PluginConfiguration pluginConfiguration = new PluginConfiguration();
+//        pluginConfiguration.setConfigurationType("com.xxg.mybatis.plugins.MySQLLimitPlugin");
+
         pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
         pluginConfiguration.addProperty("mappers", SystemParameters.MAPPER_INTERFACE_REFERENCE);
         context.addPluginConfiguration(pluginConfiguration);
@@ -47,6 +49,7 @@ public class MybatisEngine implements Engine{
         javaClientGeneratorConfiguration.setTargetProject(SystemParameters.PROJECT_PATH + SystemParameters.JAVA_PATH);
         javaClientGeneratorConfiguration.setTargetPackage(UserParameters.getPackageName() +"." +SystemParameters.MAPPER_PACKAGE_NAME);
         javaClientGeneratorConfiguration.setConfigurationType("XMLMAPPER");
+        javaClientGeneratorConfiguration.addProperty("enableSubPackages","true");
         context.setJavaClientGeneratorConfiguration(javaClientGeneratorConfiguration);
 
         TableConfiguration tableConfiguration = new TableConfiguration(context);

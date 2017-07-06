@@ -125,7 +125,7 @@ public class SpringCloudBaseEngine implements Engine {
             data.put("packageName", UserParameters.getPackageName()+"."+SystemParameters.UTILS_PACKAGE_NAME);
             String[] fileNames = {"Mapper.java","Service.java","AbstractService.java","ServiceException.java","Result.java",
                                 "ResultCode.java","ResultGenerator.java","TextUtils.java","StateUtils.java",
-                                "JWTUtils.java","ServerUtils.java"};
+                                "JWTUtils.java","ServerUtils.java","ReplaceProvider.java"};
             for (String filename:fileNames) {
                 file = new File(SystemParameters.PROJECT_PATH + SystemParameters.JAVA_PATH + TextUtils.packageConvertPath(UserParameters.getPackageName()) + "/"+SystemParameters.UTILS_PACKAGE_NAME +"/"+filename);
                 if (!file.getParentFile().exists()) {
