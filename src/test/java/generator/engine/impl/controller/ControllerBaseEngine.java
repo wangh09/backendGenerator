@@ -149,6 +149,12 @@ public class ControllerBaseEngine implements Engine {
 
     @Override
     public void execute() {
-
+        for(int i =0; i < UserParameters.tableNames.length; i++) {
+            for(int j = 0; j < UserParameters.tableNames[i].length; j++) {
+                boolean isUUID = UserParameters.tableNames[i][3].equals("3");
+                String tableName = UserParameters.tableNames[i][0];
+                generateForModel("/remove-me",UserParameters.tableNames[i][1],UserParameters.tableNames[i][2],TextUtils.tableNameConvertUpperCamel(tableName),isUUID);
+            }
+        }
     }
 }

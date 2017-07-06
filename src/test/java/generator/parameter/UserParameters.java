@@ -6,6 +6,46 @@ import java.util.ArrayList;
  * Created by wangh09 on 2017/6/30.
  */
 public class UserParameters {
+    //1: auto id 2: non-auto id 3: uuid
+    public static String[][] tableNames = {
+            {"account_user",       "account",      "user",       "1"},
+            {"account_dealer",       "account",    "dealer",      "2"},
+            {"account_expert",       "account",    "expert",      "2"},
+            {"account_follow_user",       "account", "follow",         "2"},
+            {"account_message",       "account",    "message",      "3"},
+            {"account_sms",       "account",        "sms",  "3"},
+       //     {"account_admin",       "account",          "1"},
+
+            {"product_award_record",       "product",  "award",        "1"},
+            {"product_bottle",       "product",        "bottle",  "1"},
+            {"product_catalog",       "product",       "catalog",   "1"},
+            {"product_lottery",       "product",       "lottery",   "1"},
+            {"product_lottery_record",       "product", "lottery/record",         "1"},
+            {"product_lottery_rule",       "product",   "lottery/rule",       "2"},
+            {"product_product",       "product",        "product",  "1"},
+
+            {"resource_crop",       "resource",         "crop", "1"},
+            {"resource_crop_catalog",       "resource", "crop/catalog",         "1"},
+            {"resource_crop_state",       "resource",   "crop/state",       "1"},
+            {"resource_fertilizer",       "resource",   "fertilizer",       "1"},
+            {"resource_pest",       "resource",         "pest", "1"},
+            {"resource_pesticide",       "resource",    "pesticide",      "1"},
+            {"resource_prevent",       "resource",      "prevent",    "1"},
+
+            {"social_article",       "social",          "article",    "1"},
+            {"social_article_comment",       "social",   "article/comment",       "1"},
+            {"social_article_conversation",       "social", "article/conversation",         "1"},
+            {"social_article_tag",       "social",   "article/tag",       "1"},
+            {"social_attitude",       "social",      "attitude",    "1"},
+            {"social_follow",       "social",     "follow",     "1"},
+            {"social_question",       "social",   "question",       "1"},
+            {"social_question_comment",       "social",   "question/comment",       "1"},
+            {"social_question_conversation",       "social",  "question/conversation",        "1"},
+            {"social_question_tag",       "social",     "question/tag",     "1"},
+    };
+
+
+
     private static String author;
     private static String dbHost;
     private static String dbUser;

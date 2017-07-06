@@ -7,6 +7,10 @@ import generator.parameter.UserParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by wangh09 on 2017/6/30.
  */
@@ -14,7 +18,9 @@ public class Generator {
     static Logger logger = LoggerFactory.getLogger(Generator.class);
     public static void execute() throws Exception{
         new SpringCloudBaseEngine().execute();
-        new KafkaEngine().execute();
+
+
+      //  new KafkaEngine().execute();
         printlnResult();
     }
     private static void printlnResult(){
@@ -39,6 +45,8 @@ public class Generator {
                 dbName,dbPort,packageName);
         UserParameters.addMicroService("account-service");
         UserParameters.addMicroService("resource-service");
+        UserParameters.addMicroService("social-service");
+        UserParameters.addMicroService("product-service");
         Generator.execute();
     }
 }

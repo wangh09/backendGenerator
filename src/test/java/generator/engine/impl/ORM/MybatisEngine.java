@@ -82,6 +82,11 @@ public class MybatisEngine implements Engine{
     }
     @Override
     public void execute() {
-
+        for(int i =0; i < UserParameters.tableNames.length; i++) {
+            for(int j = 0; j < UserParameters.tableNames[i].length; j++) {
+                boolean isAutoId = UserParameters.tableNames[i][3].equals("1");
+                MybatisEngine.generateWithIDType(UserParameters.tableNames[i][0],isAutoId);
+            }
+        }
     }
 }
